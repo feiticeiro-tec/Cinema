@@ -40,3 +40,19 @@ class ColaboradorRepository:
             .filter_by(usuario_id=usuario_id)
             .scalar()
         )
+
+    @classmethod
+    def new(cls, usuario_id, cinema_id, is_admin=False):
+        return cls(
+            Colaborador(
+                usuario_id=usuario_id,
+                cinema_id=cinema_id,
+                is_admin=is_admin,
+            )
+        )
+
+    def add(self):
+        db.session.add(self.colaborador)
+
+    def commit(self):
+        db.session.commit()
