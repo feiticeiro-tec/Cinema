@@ -1,5 +1,5 @@
 from database.models import Usuario
-from database.repositorys.usuario import Usuario, UsuarioRepository
+from database.repositorys.usuario import UsuarioRepository
 from database import db
 import pytest
 
@@ -24,7 +24,7 @@ def test_get_by_id(app):
 
 def test_get_by_id_not_found(app):
     with app.app_context():
-        with pytest.raises(Exception) as e:
+        with pytest.raises(Exception):
             UsuarioRepository.get_by_id("123")
 
 
@@ -93,15 +93,21 @@ def test_set_is_ativo(app):
         usuario_id = repo.usuario.id
 
     with app.app_context():
-        usuario = Usuario.query.filter(Usuario.id == usuario_id).first()
+        usuario = Usuario.query.filter(
+            Usuario.id == usuario_id,
+        ).first()
         assert usuario
-        assert usuario.is_ativo == False
+        assert usuario.is_ativo is False
 
 
 def test_get_all(app):
     with app.app_context():
         for i in range(10):
-            usuario = Usuario(email=f"email{i}", senha=f"senha{i}", nome=f"teste{i}")
+            usuario = Usuario(
+                email=f"email{i}",
+                senha=f"senha{i}",
+                nome=f"teste{i}",
+            )
             db.session.add(usuario)
         db.session.commit()
 
