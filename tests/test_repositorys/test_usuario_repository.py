@@ -66,3 +66,33 @@ def test_set_credencial(app):
         assert usuario
         assert usuario.email == "email"
         assert usuario.senha == "senha"
+
+
+def test_set_nome(app):
+    with app.app_context():
+        usuario = Usuario(email="email", senha="senha")
+        repo = UsuarioRepository(usuario)
+        repo.set_nome("teste2")
+        repo.add()
+        repo.commit()
+        usuario_id = repo.usuario.id
+
+    with app.app_context():
+        usuario = Usuario.query.filter(Usuario.id == usuario_id).first()
+        assert usuario
+        assert usuario.nome == "teste2"
+
+
+def test_set_is_ativo(app):
+    with app.app_context():
+        usuario = Usuario(email="email", senha="senha", nome="teste")
+        repo = UsuarioRepository(usuario)
+        repo.set_is_ativo(False)
+        repo.add()
+        repo.commit()
+        usuario_id = repo.usuario.id
+
+    with app.app_context():
+        usuario = Usuario.query.filter(Usuario.id == usuario_id).first()
+        assert usuario
+        assert usuario.is_ativo == False

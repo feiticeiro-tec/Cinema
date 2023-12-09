@@ -10,19 +10,25 @@ class UsuarioRepository:
         self.usuario = usuario
 
     @classmethod
-    def use_by_id(cls, id):
+    def use_by_id(cls, id: str):
         return cls(cls.get_by_id(id))
 
     @classmethod
-    def get_by_id(self, id):
+    def get_by_id(self, id: str):
         usuario = Usuario.query.filter_by(id=id).first()
         if not usuario:
             raise NotFoundUsuarioException()
         return usuario
 
-    def set_credencial(self, email, senha):
+    def set_credencial(self, email: str, senha: str):
         self.usuario.email = email
         self.usuario.senha = senha
+
+    def set_nome(self, nome: str):
+        self.usuario.nome = nome
+
+    def set_is_ativo(self, is_ativo: bool):
+        self.usuario.is_ativo = is_ativo
 
     def add(self):
         db.session.add(self.usuario)
