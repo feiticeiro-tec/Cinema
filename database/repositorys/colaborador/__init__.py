@@ -1,5 +1,6 @@
 from ...models import Colaborador
 from .exceptions import NotFoundColaboradorException
+from ... import db
 
 
 class ColaboradorRepository:
@@ -31,3 +32,11 @@ class ColaboradorRepository:
     @classmethod
     def use_by_usuario_id(cls, usuario_id):
         return cls(cls.get_by_usuario_id(usuario_id))
+
+    @classmethod
+    def usuario_is_admin(cls, usuario_id):
+        return (
+            db.session.query(Colaborador.is_admin)
+            .filter_by(usuario_id=usuario_id)
+            .scalar()
+        )
