@@ -165,3 +165,20 @@ def test_create(app):
         assert usuario.nome == "teste"
         assert usuario.email == "email"
         assert usuario.senha == "senha"
+
+
+def test_update(app):
+    with app.app_context():
+        usuario = Usuario(nome="teste", email="email", senha="senha")
+        repo = UsuarioRepository(usuario)
+        repo.update("teste2", "email2", "senha2")
+        repo.add()
+        repo.commit()
+        usuario_id = repo.usuario.id
+
+    with app.app_context():
+        usuario = Usuario.query.filter(Usuario.id == usuario_id).first()
+        assert usuario
+        assert usuario.nome == "teste2"
+        assert usuario.email == "email2"
+        assert usuario.senha == "senha2"

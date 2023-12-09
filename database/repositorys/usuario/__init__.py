@@ -52,6 +52,10 @@ class UsuarioRepository:
         repo.set_nome(nome)
         return repo
 
+    def update(self, nome: str, email: str, senha: str):
+        self.set_nome(nome)
+        self.set_credencial(email, senha)
+
     def add(self):
         db.session.add(self.usuario)
 
