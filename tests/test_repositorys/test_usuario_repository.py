@@ -135,7 +135,7 @@ def test_get_by_email(app):
 
 def test_get_by_email_not_found(app):
     with app.app_context():
-        with pytest.raises(Exception):
+        with pytest.raises(UsuarioRepository.NotFoundUsuarioException):
             UsuarioRepository.get_by_email("email")
 
 
@@ -154,13 +154,13 @@ def test_use_by_email(app):
 
 def test_use_by_email_not_found(app):
     with app.app_context():
-        with pytest.raises(Exception):
+        with pytest.raises(UsuarioRepository.NotFoundUsuarioException):
             UsuarioRepository.use_by_email("email")
 
 
-def test_create(app):
+def test_new(app):
     with app.app_context():
-        repo = UsuarioRepository.create("teste", "email", "senha")
+        repo = UsuarioRepository.new("teste", "email", "senha")
         repo.add()
         repo.commit()
         usuario_id = repo.usuario.id

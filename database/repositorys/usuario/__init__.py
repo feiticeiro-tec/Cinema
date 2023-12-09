@@ -4,6 +4,7 @@ from database import db
 
 
 class UsuarioRepository:
+    NotFoundUsuarioException = NotFoundUsuarioException
     def __init__(self, usuario: Usuario = None):
         if not usuario:
             usuario = Usuario()
@@ -18,10 +19,10 @@ class UsuarioRepository:
         return cls(cls.get_by_email(email))
 
     @classmethod
-    def get_by_id(self, id: str):
+    def get_by_id(cls, id: str):
         usuario = Usuario.query.filter_by(id=id).first()
         if not usuario:
-            raise NotFoundUsuarioException()
+            raise cls.NotFoundUsuarioException()
         return usuario
 
     @classmethod
@@ -46,7 +47,7 @@ class UsuarioRepository:
         self.usuario.is_ativo = is_ativo
 
     @classmethod
-    def create(cls, nome: str, email: str, senha: str):
+    def new(cls, nome: str, email: str, senha: str):
         repo = cls()
         repo.set_credencial(email, senha)
         repo.set_nome(nome)
