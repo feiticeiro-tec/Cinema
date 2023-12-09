@@ -10,4 +10,7 @@ app.config['ALEMBIC'] = {
     }
 db = database.init_app(app)
 with app.app_context():
-    db.alembic.upgrade()
+    if app.config['SQLALCHEMY_DATABASE_URI'].startswith('sqlite'):
+        db.create_all()
+    else:
+        db.alembic.upgrade()
