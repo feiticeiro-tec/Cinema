@@ -27,3 +27,7 @@ class ColaboradorRepository:
         if not colaborador:
             raise cls.NotFoundColaboradorException()
         return colaborador
+
+    @classmethod
+    def use_by_usuario_id(cls, usuario_id):
+        return cls(cls.get_by_usuario_id(usuario_id))
