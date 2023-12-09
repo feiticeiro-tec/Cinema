@@ -6,8 +6,8 @@ from sqlalchemy.orm import relationship
 class Sessao(db.Model):
     __tablename__ = "Sessao"
     id = db.Column(UUID, primary_key=True)
-    dt_inicio = db.Column(db.Datetime, nullable=False)
-    dt_fim = db.Column(db.Datetime, nullable=False)
+    dt_inicio = db.Column(db.DateTime, nullable=False)
+    dt_fim = db.Column(db.DateTime, nullable=False)
 
     sala_id = db.Column(UUID, db.ForeignKey("Sala.id"), nullable=False)
     sala = relationship("Sala", backref="sessoes")
@@ -15,4 +15,4 @@ class Sessao(db.Model):
     filme_id = db.Column(UUID, db.ForeignKey("Filme.id"), nullable=False)
     filme = relationship("Filme", backref="sessoes")
 
-    dt_criado = db.Column(db.Datetime, nullable=False, default=db.func.now())
+    dt_criado = db.Column(db.DateTime, nullable=False, default=db.func.now())

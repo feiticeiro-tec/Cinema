@@ -11,5 +11,5 @@ class Colaborador(db.Model):
     cinema_id = db.Column(UUID, db.ForeignKey("Cinema.id"), nullable=False)
     cinema = relationship("Cinema", backref="colaboradores")
     is_ativo = db.Column(db.Boolean, nullable=False, default=True)
-    dt_criado = db.Column(db.Datetime, nullable=False, default=datetime_local)
+    dt_criado = db.Column(db.DateTime, nullable=False, default=datetime_local)
     is_admin = db.Column(db.Boolean, nullable=False, default=False)

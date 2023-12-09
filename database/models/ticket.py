@@ -13,5 +13,5 @@ class Ticket(db.Model):
     assento = relationship("Assento", backref="tickets")
     is_cancelado = db.Column(db.Boolean, nullable=False, default=False)
     is_usado = db.Column(db.Boolean, nullable=False, default=False)
-    dt_criado = db.Column(db.Datetime, nullable=False, default=datetime_local)
+    dt_criado = db.Column(db.DateTime, nullable=False, default=datetime_local)
 
