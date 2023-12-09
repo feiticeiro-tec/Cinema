@@ -47,10 +47,11 @@ def test_set_endereco(app):
             numero=1,
             complemento="Complemento 1",
         )
-        CinemaRepository(cinema).set_endereco(enderco)
-        app.db.session.add(cinema)
-        app.db.session.commit()
-        cinema_id = cinema.id
+        repo = CinemaRepository(cinema)
+        repo.set_endereco(enderco)
+        repo.add()
+        repo.commit()
+        cinema_id = repo.cinema.id
 
     with app.app_context():
         cinema = Cinema.query.filter(Cinema.id == cinema_id).first()
@@ -78,10 +79,11 @@ def test_set_info(app):
             numero=1,
             complemento="Complemento 1",
         )
-        CinemaRepository(cinema).set_infos("Cinema 2", "Cinema 2")
-        app.db.session.add(cinema)
-        app.db.session.commit()
-        cinema_id = cinema.id
+        repo = CinemaRepository(cinema)
+        repo.set_infos("Cinema 2", "Cinema 2")
+        repo.add()
+        repo.commit()
+        cinema_id = repo.cinema.id
 
     with app.app_context():
         cinema = Cinema.query.filter(Cinema.id == cinema_id).first()
