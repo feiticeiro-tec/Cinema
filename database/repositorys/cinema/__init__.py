@@ -45,6 +45,11 @@ class CinemaRepository:
         repo.set_endereco(endereco)
         return repo
 
+    @classmethod
+    def get_all(cls, offset: int = 0, limit: int = 10):
+        cinemas = Cinema.query.offset(offset).limit(limit).all()
+        return cinemas
+
     def add(self):
         db.session.add(self.cinema)
 

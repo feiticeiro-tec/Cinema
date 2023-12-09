@@ -150,3 +150,28 @@ def test_new(app):
         assert cinema.numero == endereco.numero
         assert cinema.complemento == endereco.complemento
         assert cinema.referencia == endereco.referencia
+
+def test_get_all(app):
+    with app.app_context():
+        for i in range(10):
+            cinema = Cinema(
+                nome=f"Cinema {i}",
+                descricao=f"Cinema {i}",
+                cep="00000000",
+                uf="Estado 1",
+                cidade="Cidade 1",
+                bairro="Bairro 1",
+                rua="Rua 1",
+                numero=1,
+                complemento="Complemento 1",
+            )
+            app.db.session.add(cinema)
+        app.db.session.commit()
+    
+    with app.app_context():
+        cinemas = CinemaRepository.get_all()
+        assert cinemas
+        assert len(cinemas) == 10
+        for i in range(10):
+            assert cinemas[i].nome == f"Cinema {i}"
+            assert cinemas[i].descricao == f"Cinema {i}"
