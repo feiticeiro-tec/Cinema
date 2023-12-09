@@ -50,3 +50,19 @@ def test_use_by_id_not_found(app):
     with app.app_context():
         with pytest.raises(Exception):
             UsuarioRepository.use_by_id("123")
+
+
+def test_set_credencial(app):
+    with app.app_context():
+        usuario = Usuario(nome="teste")
+        repo = UsuarioRepository(usuario)
+        repo.set_credencial("email", "senha")
+        repo.add()
+        repo.commit()
+        usuario_id = repo.usuario.id
+
+    with app.app_context():
+        usuario = Usuario.query.filter(Usuario.id == usuario_id).first()
+        assert usuario
+        assert usuario.email == "email"
+        assert usuario.senha == "senha"

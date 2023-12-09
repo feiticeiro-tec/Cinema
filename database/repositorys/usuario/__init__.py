@@ -1,5 +1,6 @@
 from ...models import Usuario
 from .excpetions import NotFoundUsuarioException
+from database import db
 
 
 class UsuarioRepository:
@@ -18,3 +19,13 @@ class UsuarioRepository:
         if not usuario:
             raise NotFoundUsuarioException()
         return usuario
+
+    def set_credencial(self, email, senha):
+        self.usuario.email = email
+        self.usuario.senha = senha
+
+    def add(self):
+        db.session.add(self.usuario)
+
+    def commit(self):
+        db.session.commit()
