@@ -45,6 +45,13 @@ class UsuarioRepository:
     def set_is_ativo(self, is_ativo: bool):
         self.usuario.is_ativo = is_ativo
 
+    @classmethod
+    def create(cls, nome: str, email: str, senha: str):
+        repo = cls()
+        repo.set_credencial(email, senha)
+        repo.set_nome(nome)
+        return repo
+
     def add(self):
         db.session.add(self.usuario)
 
