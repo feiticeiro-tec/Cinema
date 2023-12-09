@@ -45,6 +45,10 @@ class CinemaRepository:
         repo.set_endereco(endereco)
         return repo
 
+    def update(self, nome: str, descricao: str, endereco: "Endereco"):
+        self.set_infos(nome, descricao)
+        self.set_endereco(endereco)
+
     @classmethod
     def get_all(cls, offset: int = 0, limit: int = 10):
         cinemas = Cinema.query.offset(offset).limit(limit).all()

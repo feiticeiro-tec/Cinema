@@ -175,3 +175,48 @@ def test_get_all(app):
         for i in range(10):
             assert cinemas[i].nome == f"Cinema {i}"
             assert cinemas[i].descricao == f"Cinema {i}"
+
+def test_update(app):
+    with app.app_context():
+        cinema = Cinema(
+            nome="Cinema 1",
+            descricao="Cinema 1",
+            cep="00000000",
+            uf="Estado 1",
+            cidade="Cidade 1",
+            bairro="Bairro 1",
+            rua="Rua 1",
+            numero=1,
+            complemento="Complemento 1",
+        )
+        app.db.session.add(cinema)
+        app.db.session.commit()
+        cinema_id = cinema.id
+    
+    with app.app_context():
+        endereco = CinemaRepository.Endereco(
+            cep="00000000",
+            uf="Estado 2",
+            cidade="Cidade 2",
+            bairro="Bairro 2",
+            rua="Rua 2",
+            numero=2,
+            complemento="Complemento 2",
+        )
+        repo = CinemaRepository.use_by_id(cinema_id)
+        repo.update("Cinema 2", "Cinema 2", endereco)
+        repo.commit()
+    
+    with app.app_context():
+        cinema = Cinema.query.filter(Cinema.id == cinema_id).first()
+        assert cinema
+        assert cinema.nome == "Cinema 2"
+        assert cinema.descricao == "Cinema 2"
+        assert cinema.cep == endereco.cep
+        assert cinema.uf == endereco.uf
+        assert cinema.cidade == endereco.cidade
+        assert cinema.bairro == endereco.bairro
+        assert cinema.rua == endereco.rua
+        assert cinema.numero == endereco.numero
+        assert cinema.complemento == endereco.complemento
+        assert cinema.referencia == endereco.referencia
