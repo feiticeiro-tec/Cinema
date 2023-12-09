@@ -5,7 +5,13 @@ from sqlalchemy import UniqueConstraint
 
 class Assento(db.Model):
     __tablename__ = "Assento"
-    __table_args__ = (UniqueConstraint("assento", "sala_id", name="uq_assento_sala"),)
+    __table_args__ = (
+        UniqueConstraint(
+            "assento",
+            "sala_id",
+            name="uq_assento_sala",
+        ),
+    )
 
     id = db.Column(UUID, primary_key=True, default=generate_uuid)
     assento = db.Column(db.String(50), nullable=False)

@@ -1,7 +1,6 @@
 from .. import db
 
 
-
 class EnderecoModel(db.Model):
     __abstract__ = True
 
