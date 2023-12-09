@@ -1,6 +1,7 @@
 from ...models import Cinema
 from .exceptions import NotFoundCinemaException
 from .intefaces import Endereco
+from database import db
 
 
 class CinemaRepository:
@@ -14,10 +15,7 @@ class CinemaRepository:
 
     @classmethod
     def use_by_id(cls, id):
-        cinema = Cinema.query.filter_by(id=id).first()
-        if not cinema:
-            raise cls.NotFoundCinemaException()
-        return cls(cinema)
+        return cls(cls.get_by_id(id))
 
     def set_endereco(self, endereco: "Endereco"):
         self.cinema.cep = endereco.cep
@@ -32,3 +30,17 @@ class CinemaRepository:
     def set_infos(self, nome: str, descricao: str):
         self.cinema.nome = nome
         self.cinema.descricao = descricao
+
+    @classmethod
+    def get_by_id(cls, id):
+        cinema = Cinema.query.filter_by(id=id).first()
+        if not cinema:
+            raise cls.NotFoundCinemaException()
+        return cinema
+
+    def add(self):
+        db.session.add(self.cinema)
+
+    @classmethod
+    def commit(cls):
+        db.session.commit()
