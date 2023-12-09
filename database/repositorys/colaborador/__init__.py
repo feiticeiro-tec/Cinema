@@ -20,4 +20,3 @@ class ColaboradorRepository:
         if not colaborador:
             raise cls.NotFoundColaboradorException()
         return colaborador
-    
