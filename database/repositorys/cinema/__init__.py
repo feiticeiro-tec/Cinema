@@ -28,3 +28,7 @@ class CinemaRepository:
         self.cinema.numero = endereco.numero
         self.cinema.complemento = endereco.complemento
         self.cinema.referencia = endereco.referencia
+
+    def set_infos(self, nome: str, descricao: str):
+        self.cinema.nome = nome
+        self.cinema.descricao = descricao

@@ -58,3 +58,27 @@ def test_set_endereco(app):
         assert cinema.numero == enderco.numero
         assert cinema.complemento == enderco.complemento
         assert cinema.referencia == enderco.referencia
+
+def test_set_info(app):
+    with app.app_context():
+        cinema = Cinema(
+            nome="Cinema 1",
+            descricao="Cinema 1",
+            cep="00000000",
+            uf="Estado 1",
+            cidade="Cidade 1",
+            bairro="Bairro 1",
+            rua="Rua 1",
+            numero=1,
+            complemento="Complemento 1",
+        )
+        CinemaRepository(cinema).set_infos("Cinema 2", "Cinema 2")
+        app.db.session.add(cinema)
+        app.db.session.commit()
+        cinema_id = cinema.id
+
+    with app.app_context():
+        cinema = Cinema.query.filter(Cinema.id == cinema_id).first()
+        assert cinema
+        assert cinema.nome == "Cinema 2"
+        assert cinema.descricao == "Cinema 2"
