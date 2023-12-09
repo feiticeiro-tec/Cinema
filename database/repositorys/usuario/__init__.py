@@ -24,6 +24,13 @@ class UsuarioRepository:
     def get_all(cls, offset: int, limit: int):
         return Usuario.query.offset(offset).limit(limit).all()
 
+    @classmethod
+    def get_by_email(cls, email: str):
+        usuario = Usuario.query.filter_by(email=email).first()
+        if not usuario:
+            raise NotFoundUsuarioException()
+        return usuario
+
     def set_credencial(self, email: str, senha: str):
         self.usuario.email = email
         self.usuario.senha = senha
