@@ -125,3 +125,26 @@ def test_get_by_email(app):
         assert usuario.nome == "teste"
         assert usuario.email == "email"
         assert usuario.senha == "senha"
+
+def test_get_by_email_not_found(app):
+    with app.app_context():
+        with pytest.raises(Exception):
+            UsuarioRepository.get_by_email("email")
+
+
+def test_use_by_email(app):
+    with app.app_context():
+        usuario = Usuario(email="email", senha="senha", nome="teste")
+        db.session.add(usuario)
+        db.session.commit()
+
+    with app.app_context():
+        repo = UsuarioRepository.use_by_email("email")
+        assert repo.usuario.nome == "teste"
+        assert repo.usuario.email == "email"
+        assert repo.usuario.senha == "senha"
+
+def test_use_by_email_not_found(app):
+    with app.app_context():
+        with pytest.raises(Exception):
+            UsuarioRepository.use_by_email("email")

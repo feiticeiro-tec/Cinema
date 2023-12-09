@@ -14,6 +14,10 @@ class UsuarioRepository:
         return cls(cls.get_by_id(id))
 
     @classmethod
+    def use_by_email(cls, email: str):
+        return cls(cls.get_by_email(email))
+
+    @classmethod
     def get_by_id(self, id: str):
         usuario = Usuario.query.filter_by(id=id).first()
         if not usuario:
