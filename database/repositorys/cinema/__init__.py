@@ -38,6 +38,13 @@ class CinemaRepository:
             raise cls.NotFoundCinemaException()
         return cinema
 
+    @classmethod
+    def new(cls, nome: str, descricao: str, endereco: "Endereco"):
+        repo = cls()
+        repo.set_infos(nome, descricao)
+        repo.set_endereco(endereco)
+        return repo
+
     def add(self):
         db.session.add(self.cinema)
 
