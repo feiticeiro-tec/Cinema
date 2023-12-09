@@ -1,11 +1,11 @@
 from .. import db
-from database.adapters.type import UUID
+from database.adapters.type import UUID, generate_uuid
 from sqlalchemy.orm import relationship
 
 
 class Sessao(db.Model):
     __tablename__ = "Sessao"
-    id = db.Column(UUID, primary_key=True)
+    id = db.Column(UUID, primary_key=True, default=generate_uuid)
     dt_inicio = db.Column(db.DateTime, nullable=False)
     dt_fim = db.Column(db.DateTime, nullable=False)
 

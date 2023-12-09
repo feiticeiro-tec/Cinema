@@ -1,11 +1,11 @@
 from .. import db
-from database.adapters.type import UUID
+from database.adapters.type import UUID, generate_uuid
 from database.adapters.functions import datetime_local
 
 
 class Usuario(db.Model):
     __tablename__ = "Usuario"
-    id = db.Column(UUID, primary_key=True)
+    id = db.Column(UUID, primary_key=True, default=generate_uuid)
     nome = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False, unique=True)
     senha = db.Column(db.String(255), nullable=False)

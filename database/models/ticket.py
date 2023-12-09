@@ -1,10 +1,11 @@
 from .. import db
-from database.adapters.type import UUID
+from database.adapters.type import UUID, generate_uuid
 from database.adapters.functions import datetime_local
 from sqlalchemy.orm import relationship
 
+
 class Ticket(db.Model):
-    id = db.Column(UUID, primary_key=True)
+    id = db.Column(UUID, primary_key=True, default=generate_uuid)
     sessao_id = db.Column(UUID, db.ForeignKey("Sessao.id"), nullable=False)
     sessao = relationship("Sessao", backref="tickets")
     usuario_id = db.Column(UUID, db.ForeignKey("Usuario.id"), nullable=False)
@@ -14,4 +15,3 @@ class Ticket(db.Model):
     is_cancelado = db.Column(db.Boolean, nullable=False, default=False)
     is_usado = db.Column(db.Boolean, nullable=False, default=False)
     dt_criado = db.Column(db.DateTime, nullable=False, default=datetime_local)
-
