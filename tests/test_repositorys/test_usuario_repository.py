@@ -96,3 +96,18 @@ def test_set_is_ativo(app):
         usuario = Usuario.query.filter(Usuario.id == usuario_id).first()
         assert usuario
         assert usuario.is_ativo == False
+
+def test_get_all(app):
+    with app.app_context():
+        for i in range(10):
+            usuario = Usuario(email=f"email{i}", senha=f"senha{i}", nome=f"teste{i}")
+            db.session.add(usuario)
+        db.session.commit()
+    
+    with app.app_context():
+        usuarios = UsuarioRepository.get_all(0, 10)
+        assert len(usuarios) == 10
+        for i in range(10):
+            assert usuarios[i].nome == f"teste{i}"
+            assert usuarios[i].email == f"email{i}"
+            assert usuarios[i].senha == f"senha{i}"

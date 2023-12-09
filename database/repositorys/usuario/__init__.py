@@ -20,6 +20,10 @@ class UsuarioRepository:
             raise NotFoundUsuarioException()
         return usuario
 
+    @classmethod
+    def get_all(cls, offset: int, limit: int):
+        return Usuario.query.offset(offset).limit(limit).all()
+
     def set_credencial(self, email: str, senha: str):
         self.usuario.email = email
         self.usuario.senha = senha
