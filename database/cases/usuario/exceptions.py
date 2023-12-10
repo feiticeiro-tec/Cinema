@@ -1,0 +1,2 @@
+class ContratoInvalido(Exception):
+    pass
