@@ -122,6 +122,7 @@ def test_new(app):
         assert sala.descricao == "descricao"
         assert sala.cinema_id == cinema_id
 
+
 def test_update(app):
     with app.app_context():
         cinema = CinemaRepository.new(
@@ -157,7 +158,7 @@ def test_update(app):
             descricao="descricao2",
         )
         repo.commit()
-        
+
     with app.app_context():
         sala = Sala.query.filter(Sala.id == sala_id).first()
         assert sala.nome == "sala2"
@@ -197,7 +198,7 @@ def test_set_is_ativo(app):
         repo = SalaRepository.use_by_id(sala_id)
         repo.set_is_ativo(False)
         repo.commit()
-        
+
     with app.app_context():
         sala = Sala.query.filter(Sala.id == sala_id).first()
-        assert sala.is_ativo == False
+        assert sala.is_ativo is False
