@@ -1,5 +1,6 @@
 from ...models import Assento
 from .exceptions import NotFoundAssentoException as NotFound
+from ... import db
 
 
 class AssentoRepository:
@@ -20,3 +21,27 @@ class AssentoRepository:
     @classmethod
     def use_by_id(cls, id):
         return cls(cls.get_by_id(id))
+
+    def set_local(self, fileira, numero):
+        self.assento.fileira = fileira
+        self.assento.numero = numero
+
+    def set_ativo(self, is_ativo):
+        self.assento.is_ativo = is_ativo
+
+    def set_sala_id(self, sala_id):
+        self.assento.sala_id = sala_id
+
+    @classmethod
+    def new(cls, fileira, numero, sala_id):
+        repo = cls()
+        repo.set_local(fileira, numero)
+        repo.set_sala_id(sala_id)
+        return repo
+
+    def add(self):
+        db.session.add(self.assento)
+
+    @classmethod
+    def commit(cls):
+        db.session.commit()
