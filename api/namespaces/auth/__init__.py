@@ -1,4 +1,4 @@
-from flask_restx import Api, Resource, abort, fields
+from flask_restx import Resource, abort, fields
 from core.cases.usuario.contratos import Contratos
 from core.cases.usuario import UsuarioCase
 from flask_pydantic import validate
