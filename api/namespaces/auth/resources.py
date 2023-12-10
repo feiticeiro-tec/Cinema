@@ -1,0 +1,48 @@
+from flask_restx import Resource, abort
+from flask_pydantic import validate
+from core.cases.usuario.contratos import Contratos
+from core.cases.usuario import UsuarioCase
+from . import np_auth
+from .forms import form_login, form_register, form_confirmar_registro
+
+
+class AuthResource(Resource):
+    @np_auth.expect(form_login)
+    @validate()
+    def post(self, body: Contratos.LoginContrato):
+        """Fazer login"""
+        try:
+            case = UsuarioCase.login(body)
+        except UsuarioCase.Exceptions.ConfirmacaoInvalida:
+            abort(401, "Login ou senha incorretos")
+        return {"usuario": case.repository.usuario.id}
+
+
+class AuthRegisterResource(Resource):
+    @np_auth.expect(form_register)
+    @validate()
+    def post(self, body: Contratos.CreateContrato):
+        """Cadastrar usuario"""
+        try:
+            case = UsuarioCase.create(body)
+            case.commit()
+        except UsuarioCase.Exceptions.UsuarioDuplicado:
+            abort(409, "Usuário já cadastrado")
+        return {
+            "titulo": "Usuário cadastrado com sucesso",
+            "message": "Um email de confirmação foi enviado para o seu email",
+        }, 201
+
+    @np_auth.expect(form_confirmar_registro)
+    @validate()
+    def put(self, body: Contratos.ConfirmUsuario):
+        """Confirmar cadastro de usuario"""
+        try:
+            case = UsuarioCase.confirm_account(body)
+            case.commit()
+        except UsuarioCase.Exceptions.NotFoundUsuarioException:
+            abort(400, "Token Invalido")
+        return {
+            "titulo": "Conta confirmada com sucesso",
+            "message": "Agora você pode fazer login",
+        }

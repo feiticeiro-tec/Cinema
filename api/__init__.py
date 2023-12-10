@@ -6,4 +6,4 @@ api = Api()
 
 def init_app(app):
     api.init_app(app)
-    import_module("api.namespaces")
+    import_module(".namespaces", package=__name__)
