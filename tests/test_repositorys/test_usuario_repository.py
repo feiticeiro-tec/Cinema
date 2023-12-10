@@ -189,6 +189,7 @@ def test_update(app):
         assert usuario.email == "email2"
         assert usuario.senha == "senha2"
 
+
 def test_exists_email(app):
     with app.app_context():
         usuario = Usuario(nome="teste", email="email", senha="senha")
@@ -202,3 +203,29 @@ def test_exists_email(app):
         assert UsuarioRepository.exists_email("email", [usuario_id]) is False
         assert UsuarioRepository.exists_email("email2") is False
         assert UsuarioRepository.exists_email("email2", ["123"]) is False
+
+
+def test_new_duplicado(app):
+    with app.app_context():
+        usuario = Usuario(nome="teste", email="email", senha="senha")
+        db.session.add(usuario)
+        db.session.commit()
+
+    with app.app_context():
+        with pytest.raises(UsuarioRepository.DuplicateEmailUsuarioException):
+            UsuarioRepository.new("teste", "email", "senha")
+
+
+def test_update_duplicado(app):
+    with app.app_context():
+        usuario = Usuario(nome="teste", email="email", senha="senha")
+        db.session.add(usuario)
+        usuario2 = Usuario(nome="teste2", email="email2", senha="senha2")
+        db.session.add(usuario2)
+        db.session.commit()
+        usuario2_id = usuario2.id
+
+    with app.app_context():
+        repo = UsuarioRepository.use_by_id(usuario2_id)
+        with pytest.raises(UsuarioRepository.DuplicateEmailUsuarioException):
+            repo.update("teste", "email", "senha")
