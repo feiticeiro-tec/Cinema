@@ -11,3 +11,16 @@ class UsuarioCreate(BaseModel):
     @classmethod
     def pre_senha(cls, value):
         return generate_password_hash(value)
+
+
+class LoginContrato(BaseModel):
+    email: str
+    senha: str
+
+    def check_login(self, hash_password):
+        return check_password_hash(hash_password, self.senha)
+
+
+class Contratos:
+    CreateContrato = UsuarioCreate
+    LoginContrato = LoginContrato

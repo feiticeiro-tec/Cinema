@@ -1,18 +1,12 @@
 from database.repositorys.usuario import UsuarioRepository, Usuario
-from .contratos import (
-    UsuarioCreate,
-    UsuarioUpdateInfos,
-)
+from .contratos import Contratos
 from .exceptions import ContratoInvalido, ConfirmacaoInvalida
 
 
 class UsuarioCase:
     ContratoInvalido = ContratoInvalido
     ConfirmacaoInvalida = ConfirmacaoInvalida
-
-    class Contratos:
-        CreateContrato = UsuarioCreate
-        UsuarioUpdateInfos = UsuarioUpdateInfos
+    Contratos = Contratos
 
     def __init__(self, repository: UsuarioRepository):
         if isinstance(repository, Usuario):
@@ -39,3 +33,16 @@ class UsuarioCase:
     def commit(self):
         self.repository.commit()
         return self
+
+    @classmethod
+    def login(cls, contrato: "Contratos.LoginContrato"):
+        cls.check_contrato(contrato, cls.Contratos.LoginContrato)
+        try:
+            usuario = UsuarioRepository.get_by_email(
+                email=contrato.email,
+            )
+        except UsuarioRepository.NotFoundUsuarioException:
+            raise cls.ConfirmacaoInvalida()
+        if not contrato.check_login(usuario.senha):
+            raise cls.ConfirmacaoInvalida()
+        return cls(usuario)
