@@ -7,6 +7,7 @@ class UsuarioCase:
     ContratoInvalido = ContratoInvalido
     ConfirmacaoInvalida = ConfirmacaoInvalida
     Contratos = Contratos
+    UsuarioDuplicado = UsuarioRepository.DuplicateEmailUsuarioException
 
     def __init__(self, repository: UsuarioRepository):
         if isinstance(repository, Usuario):

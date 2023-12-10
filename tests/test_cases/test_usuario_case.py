@@ -20,6 +20,21 @@ def test_create(app):
         assert usuario.senha != "senha"
 
 
+def test_create_duplicado(app):
+    with app.app_context():
+        contrato = UsuarioCase.Contratos.CreateContrato(
+            nome="teste",
+            email="email",
+            senha="senha",
+        )
+        case = UsuarioCase.create(contrato)
+        case.commit()
+
+    with app.app_context():
+        with pytest.raises(UsuarioCase.UsuarioDuplicado):
+            case = UsuarioCase.create(contrato)
+
+
 def test_check_contrato():
     with pytest.raises(UsuarioCase.ContratoInvalido):
         UsuarioCase.check_contrato({}, str)
@@ -61,6 +76,7 @@ def test_login_senha_invalida(app):
         )
         with pytest.raises(UsuarioCase.ConfirmacaoInvalida):
             UsuarioCase.login(contrato)
+
 
 def test_login_email_invalida(app):
     with app.app_context():
