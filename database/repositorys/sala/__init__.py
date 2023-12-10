@@ -38,6 +38,9 @@ class SalaRepository:
         repo.set_cinema_id(cinema_id)
         return repo
 
+    def update(self, nome, descricao):
+        self.set_infos(nome, descricao)
+
     def add(self):
         db.session.add(self.sala)
 
