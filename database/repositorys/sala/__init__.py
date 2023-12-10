@@ -19,3 +19,7 @@ class SalaRepository:
         if not sala:
             raise cls.NotFoundSalaException()
         return sala
+
+    @classmethod
+    def use_by_id(cls, id):
+        return cls(cls.get_by_id(id))
