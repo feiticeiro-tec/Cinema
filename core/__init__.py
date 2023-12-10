@@ -12,7 +12,7 @@ def init_app(app):
     app.extensions['sqlalchemy'].db = db
     alembic.init_app(app)
     db.alembic = alembic
-    import_module('database.models')
+    import_module('core.models')
     return db
 
 

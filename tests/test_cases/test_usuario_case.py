@@ -1,4 +1,4 @@
-from database.cases.usuario import UsuarioCase, UsuarioRepository
+from core.cases.usuario import UsuarioCase, UsuarioRepository
 import pytest
 
 

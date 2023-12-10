@@ -1,6 +1,6 @@
 from .. import db
-from database.adapters.type import UUID, generate_uuid
-from database.adapters.models import EnderecoModel
+from core.adapters.type import UUID, generate_uuid
+from core.adapters.models import EnderecoModel
 
 
 class Cinema(EnderecoModel, db.Model):

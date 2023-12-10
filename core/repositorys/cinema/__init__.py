@@ -1,7 +1,7 @@
 from ...models import Cinema
 from .exceptions import NotFoundCinemaException
 from .intefaces import Endereco
-from database import db
+from core import db
 
 
 class CinemaRepository:

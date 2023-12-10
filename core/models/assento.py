@@ -1,5 +1,5 @@
 from .. import db
-from database.adapters.type import UUID, generate_uuid
+from core.adapters.type import UUID, generate_uuid
 from sqlalchemy import UniqueConstraint
 
 

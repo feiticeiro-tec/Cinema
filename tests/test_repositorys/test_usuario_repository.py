@@ -1,6 +1,6 @@
-from database.models import Usuario
-from database.repositorys.usuario import UsuarioRepository
-from database import db
+from core.models import Usuario
+from core.repositorys.usuario import UsuarioRepository
+from core import db
 import pytest
 
 

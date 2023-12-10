@@ -1,4 +1,4 @@
-from database.repositorys.usuario.excpetions import UsuarioDuplicado,NotFoundUsuarioException
+from core.repositorys.usuario.excpetions import UsuarioDuplicado,NotFoundUsuarioException
 
 class ContratoInvalido(Exception):
     pass

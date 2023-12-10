@@ -3,7 +3,7 @@ from .excpetions import (
     NotFoundUsuarioException,
     UsuarioDuplicado,
 )
-from database import db
+from core import db
 
 
 class UsuarioRepository:

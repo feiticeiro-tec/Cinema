@@ -1,4 +1,4 @@
-from database.repositorys.usuario import UsuarioRepository, Usuario
+from core.repositorys.usuario import UsuarioRepository, Usuario
 from .contratos import Contratos
 from .exceptions import Exceptions
 

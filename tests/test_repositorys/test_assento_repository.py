@@ -1,8 +1,8 @@
-from database.models.assento import Assento
-from database.repositorys.assento import AssentoRepository
-from database.repositorys.cinema import CinemaRepository
-from database.repositorys.sala import SalaRepository
-from database import db
+from core.models.assento import Assento
+from core.repositorys.assento import AssentoRepository
+from core.repositorys.cinema import CinemaRepository
+from core.repositorys.sala import SalaRepository
+from core import db
 import pytest
 
 
