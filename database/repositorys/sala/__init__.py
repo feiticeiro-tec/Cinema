@@ -23,3 +23,23 @@ class SalaRepository:
     @classmethod
     def use_by_id(cls, id):
         return cls(cls.get_by_id(id))
+
+    def set_infos(self, nome, descricao):
+        self.sala.nome = nome
+        self.sala.descricao = descricao
+
+    def set_cinema_id(self, cinema_id):
+        self.sala.cinema_id = cinema_id
+
+    @classmethod
+    def new(cls, nome, descricao, cinema_id):
+        repo = cls()
+        repo.set_infos(nome, descricao)
+        repo.set_cinema_id(cinema_id)
+        return repo
+
+    def add(self):
+        db.session.add(self.sala)
+
+    def commit(self):
+        db.session.commit()
