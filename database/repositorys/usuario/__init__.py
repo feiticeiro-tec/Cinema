@@ -48,6 +48,15 @@ class UsuarioRepository:
         self.usuario.is_ativo = is_ativo
 
     @classmethod
+    def exists_email(self, email: str, id_not_in=[]):
+        usuario = (
+            db.session.query(Usuario.id)
+            .filter(Usuario.email == email, Usuario.id.notin_(id_not_in))
+            .first()
+        )
+        return usuario is not None
+
+    @classmethod
     def new(cls, nome: str, email: str, senha: str):
         repo = cls()
         repo.set_credencial(email, senha)

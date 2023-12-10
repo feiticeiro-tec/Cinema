@@ -188,3 +188,17 @@ def test_update(app):
         assert usuario.nome == "teste2"
         assert usuario.email == "email2"
         assert usuario.senha == "senha2"
+
+def test_exists_email(app):
+    with app.app_context():
+        usuario = Usuario(nome="teste", email="email", senha="senha")
+        db.session.add(usuario)
+        db.session.commit()
+        usuario_id = usuario.id
+
+    with app.app_context():
+        assert UsuarioRepository.exists_email("email") is True
+        assert UsuarioRepository.exists_email("email", ["123"]) is True
+        assert UsuarioRepository.exists_email("email", [usuario_id]) is False
+        assert UsuarioRepository.exists_email("email2") is False
+        assert UsuarioRepository.exists_email("email2", ["123"]) is False
