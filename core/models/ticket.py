@@ -1,6 +1,6 @@
 from .. import db
-from database.adapters.type import UUID, generate_uuid
-from database.adapters.functions import datetime_local
+from core.adapters.type import UUID, generate_uuid
+from core.adapters.functions import datetime_local
 from sqlalchemy.orm import relationship
 
 

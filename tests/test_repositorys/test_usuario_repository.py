@@ -1,6 +1,6 @@
-from database.models import Usuario
-from database.repositorys.usuario import UsuarioRepository
-from database import db
+from core.models import Usuario
+from core.repositorys.usuario import UsuarioRepository
+from core import db
 import pytest
 
 
@@ -52,40 +52,9 @@ def test_use_by_id_not_found(app):
             UsuarioRepository.use_by_id("123")
 
 
-def test_set_credencial(app):
-    with app.app_context():
-        usuario = Usuario(nome="teste")
-        repo = UsuarioRepository(usuario)
-        repo.set_credencial("email", "senha")
-        repo.add()
-        repo.commit()
-        usuario_id = repo.usuario.id
-
-    with app.app_context():
-        usuario = Usuario.query.filter(Usuario.id == usuario_id).first()
-        assert usuario
-        assert usuario.email == "email"
-        assert usuario.senha == "senha"
-
-
-def test_set_nome(app):
-    with app.app_context():
-        usuario = Usuario(email="email", senha="senha")
-        repo = UsuarioRepository(usuario)
-        repo.set_nome("teste2")
-        repo.add()
-        repo.commit()
-        usuario_id = repo.usuario.id
-
-    with app.app_context():
-        usuario = Usuario.query.filter(Usuario.id == usuario_id).first()
-        assert usuario
-        assert usuario.nome == "teste2"
-
-
 def test_set_is_ativo(app):
     with app.app_context():
-        usuario = Usuario(email="email", senha="senha", nome="teste")
+        usuario = Usuario(email="email", senha="senha", nome="teste",)
         repo = UsuarioRepository(usuario)
         repo.set_is_ativo(False)
         repo.add()
@@ -188,3 +157,44 @@ def test_update(app):
         assert usuario.nome == "teste2"
         assert usuario.email == "email2"
         assert usuario.senha == "senha2"
+
+
+def test_exists_email(app):
+    with app.app_context():
+        usuario = Usuario(nome="teste", email="email", senha="senha")
+        db.session.add(usuario)
+        db.session.commit()
+        usuario_id = usuario.id
+
+    with app.app_context():
+        assert UsuarioRepository.exists_email("email") is True
+        assert UsuarioRepository.exists_email("email", ["123"]) is True
+        assert UsuarioRepository.exists_email("email", [usuario_id]) is False
+        assert UsuarioRepository.exists_email("email2") is False
+        assert UsuarioRepository.exists_email("email2", ["123"]) is False
+
+
+def test_new_duplicado(app):
+    with app.app_context():
+        usuario = Usuario(nome="teste", email="email", senha="senha")
+        db.session.add(usuario)
+        db.session.commit()
+
+    with app.app_context():
+        with pytest.raises(UsuarioRepository.UsuarioDuplicado):
+            UsuarioRepository.new("teste", "email", "senha")
+
+
+def test_update_duplicado(app):
+    with app.app_context():
+        usuario = Usuario(nome="teste", email="email", senha="senha")
+        db.session.add(usuario)
+        usuario2 = Usuario(nome="teste2", email="email2", senha="senha2")
+        db.session.add(usuario2)
+        db.session.commit()
+        usuario2_id = usuario2.id
+
+    with app.app_context():
+        repo = UsuarioRepository.use_by_id(usuario2_id)
+        with pytest.raises(UsuarioRepository.UsuarioDuplicado):
+            repo.update("teste", "email", "senha")

@@ -1,6 +1,6 @@
-from database.repositorys.sala import SalaRepository, Sala
-from database.repositorys.cinema import CinemaRepository
-from database import db
+from core.repositorys.sala import SalaRepository, Sala
+from core.repositorys.cinema import CinemaRepository
+from core import db
 import pytest
 
 
