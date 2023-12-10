@@ -5,6 +5,7 @@ from sqlalchemy.orm import relationship
 
 
 class Ticket(db.Model):
+    __tablename__ = "Ticket"
     id = db.Column(UUID, primary_key=True, default=generate_uuid)
     sessao_id = db.Column(UUID, db.ForeignKey("Sessao.id"), nullable=False)
     sessao = relationship("Sessao", backref="tickets")
