@@ -15,7 +15,7 @@ class Assento(db.Model):
     )
 
     id = db.Column(UUID, primary_key=True, default=generate_uuid)
-    
+
     fileira = db.Column(db.String(50), nullable=False)
     numero = db.Column(db.Integer, nullable=False)
 

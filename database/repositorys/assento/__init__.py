@@ -56,7 +56,14 @@ class AssentoRepository:
         self.set_ativo(is_ativo)
 
     @classmethod
-    def exists_in_local(cls, fileira, numero, sala_id, id_not_in=[], raiser=False):
+    def exists_in_local(
+        cls,
+        fileira,
+        numero,
+        sala_id,
+        id_not_in=[],
+        raiser=False,
+    ):
         assento = (
             db.session.query(Assento.id)
             .filter(
