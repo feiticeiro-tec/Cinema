@@ -119,7 +119,7 @@ def test_login_email_invalida(app):
             UsuarioCase.login(contrato)
 
 
-def test_confirm_usuario(app):
+def test_confirm_account(app):
     with app.app_context():
         contrato = UsuarioCase.Contratos.CreateContrato(
             nome="teste",
@@ -136,5 +136,5 @@ def test_confirm_usuario(app):
             token=usuario.id,
             senha="senha",
         )
-        case = UsuarioCase.confirm_usuario(contrato)
+        case = UsuarioCase.confirm_account(contrato)
         assert case.repository.usuario.is_ativo

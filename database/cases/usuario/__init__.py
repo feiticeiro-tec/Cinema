@@ -50,7 +50,7 @@ class UsuarioCase:
         return cls(usuario)
 
     @classmethod
-    def confirm_usuario(cls, contrato: "Contratos.ConfirmUsuario"):
+    def confirm_account(cls, contrato: "Contratos.ConfirmUsuario"):
         cls.check_contrato(contrato, cls.Contratos.ConfirmUsuario)
         usuario = UsuarioRepository.use_by_id(id=contrato.token)
         usuario.set_is_ativo(True)
