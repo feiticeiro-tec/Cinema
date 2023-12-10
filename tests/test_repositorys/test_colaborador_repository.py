@@ -226,12 +226,12 @@ def test_usuario_is_admin(app):
         db.session.commit()
 
     with app.app_context():
-        assert ColaboradorRepository.usuario_is_admin(usuario_id) == False
+        assert ColaboradorRepository.usuario_is_admin(usuario_id) is False
         colaborador = ColaboradorRepository.use_by_usuario_id(usuario_id)
         colaborador.set_admin(True)
         colaborador.commit()
     with app.app_context():
-        assert ColaboradorRepository.usuario_is_admin(usuario_id) == True
+        assert ColaboradorRepository.usuario_is_admin(usuario_id) is True
 
 
 def test_new(app):
@@ -267,12 +267,13 @@ def test_new(app):
         colaborador_id = repo.colaborador.id
 
     with app.app_context():
-        colaborador = Colaborador.query.filter(Colaborador.id == colaborador_id).first()
+        colaborador = Colaborador.query.filter(
+            Colaborador.id == colaborador_id,
+        ).first()
         assert colaborador
         assert colaborador.usuario_id == usuario_id
         assert colaborador.cinema_id == cinema_id
-        assert colaborador.is_admin == False
-
+        assert colaborador.is_admin is False
 
 
 def test_new_duplicado(app):
@@ -307,10 +308,13 @@ def test_new_duplicado(app):
         repo.commit()
 
     with app.app_context():
-        with pytest.raises(ColaboradorRepository.DuplicadoColaboradorException):
+        with pytest.raises(
+            ColaboradorRepository.DuplicadoColaboradorException,
+        ):
             repo = ColaboradorRepository.new(usuario_id, cinema_id)
             repo.add()
             repo.commit()
+
 
 def test_set_ativo(app):
     with app.app_context():
@@ -345,11 +349,15 @@ def test_set_ativo(app):
         colaborador_id = repo.colaborador.id
 
     with app.app_context():
-        colaborador = Colaborador.query.filter(Colaborador.id == colaborador_id).first()
-        assert colaborador.is_ativo == True
+        colaborador = Colaborador.query.filter(
+            Colaborador.id == colaborador_id,
+        ).first()
+        assert colaborador.is_ativo is True
         colaborador = ColaboradorRepository.use_by_id(colaborador_id)
         colaborador.set_ativo(False)
         colaborador.commit()
     with app.app_context():
-        colaborador = Colaborador.query.filter(Colaborador.id == colaborador_id).first()
-        assert colaborador.is_ativo == False
+        colaborador = Colaborador.query.filter(
+            Colaborador.id == colaborador_id,
+        ).first()
+        assert colaborador.is_ativo is False

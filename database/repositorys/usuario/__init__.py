@@ -5,6 +5,7 @@ from database import db
 
 class UsuarioRepository:
     NotFoundUsuarioException = NotFoundUsuarioException
+
     def __init__(self, usuario: Usuario = None):
         if not usuario:
             usuario = Usuario()

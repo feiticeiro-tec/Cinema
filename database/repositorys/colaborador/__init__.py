@@ -1,12 +1,14 @@
-from database.models import colaborador
 from ...models import Colaborador
-from .exceptions import NotFoundColaboradorException, DuplicadoColaboradorException
+from .exceptions import (
+    NotFoundColaboradorException as NotFound,
+    DuplicadoColaboradorException as Duplicado
+)
 from ... import db
 
 
 class ColaboradorRepository:
-    NotFoundColaboradorException = NotFoundColaboradorException
-    DuplicadoColaboradorException = DuplicadoColaboradorException
+    NotFoundColaboradorException = NotFound
+    DuplicadoColaboradorException = Duplicado
 
     def __init__(self, colaborador: Colaborador = None):
         if not colaborador:
@@ -26,7 +28,9 @@ class ColaboradorRepository:
 
     @classmethod
     def get_by_usuario_id(cls, usuario_id) -> Colaborador:
-        colaborador = Colaborador.query.filter_by(usuario_id=usuario_id).first()
+        colaborador = Colaborador.query.filter_by(
+            usuario_id=usuario_id,
+        ).first()
         if not colaborador:
             raise cls.NotFoundColaboradorException()
         return colaborador
@@ -60,10 +64,10 @@ class ColaboradorRepository:
 
     def set_admin(self, is_admin: bool):
         self.colaborador.is_admin = is_admin
-    
+
     def set_ativo(self, is_ativo: bool):
         self.colaborador.is_ativo = is_ativo
-    
+
     @classmethod
     def is_usuario_exist_on_cinema(cls, usuario_id, cinema_id):
         colaborador = (

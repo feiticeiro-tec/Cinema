@@ -8,7 +8,11 @@ from sqlalchemy import UniqueConstraint
 class Colaborador(db.Model):
     __tablename__ = "Colaborador"
     __table_args__ = (
-        UniqueConstraint("usuario_id", "cinema_id", name="unique_usuario_cinema"),
+        UniqueConstraint(
+            "usuario_id",
+            "cinema_id",
+            name="unique_usuario_cinema",
+        ),
     )
     id = db.Column(UUID, primary_key=True, default=generate_uuid)
     usuario_id = db.Column(UUID, db.ForeignKey("Usuario.id"), nullable=False)
