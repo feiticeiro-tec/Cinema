@@ -17,6 +17,10 @@ class UsuarioRepository:
 
     @classmethod
     def use_by_id(cls, id: str):
+        """Pegar um usuario existente.
+
+        raises: NotFoundUsuarioException
+        """
         return cls(cls.get_by_id(id))
 
     @classmethod

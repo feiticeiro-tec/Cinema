@@ -1,6 +1,7 @@
 from flask import Flask
 import core
 import pytest
+import api
 
 
 @pytest.fixture(scope="session")
@@ -9,6 +10,7 @@ def _app():
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     core.init_app(app)
+    api.init_app(app)
     return app
 
 

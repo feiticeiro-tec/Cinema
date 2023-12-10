@@ -51,6 +51,11 @@ class UsuarioCase:
 
     @classmethod
     def confirm_account(cls, contrato: "Contratos.ConfirmUsuario"):
+        """confirmar conta de usuario
+
+        raises: NotFoundUsuarioException
+        
+        """
         cls.check_contrato(contrato, cls.Contratos.ConfirmUsuario)
         usuario = UsuarioRepository.use_by_id(id=contrato.token)
         usuario.set_is_ativo(True)

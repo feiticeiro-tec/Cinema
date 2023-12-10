@@ -1,4 +1,4 @@
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, validator
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -7,7 +7,7 @@ class UsuarioCreate(BaseModel):
     email: str
     senha: str
 
-    @field_validator("senha")
+    @validator("senha")
     @classmethod
     def pre_senha(cls, value):
         return generate_password_hash(value)
