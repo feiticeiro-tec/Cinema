@@ -72,4 +72,4 @@ def test_login(app):
             },
         )
         assert response.status_code == 200
-        assert response.json == {"usuario": usuario_id}
+        assert response.json["access_token"]

@@ -2,6 +2,7 @@ from flask_restx import Resource, abort
 from flask_pydantic import validate
 from core.cases.usuario.contratos import Contratos
 from core.cases.usuario import UsuarioCase
+from flask_jwt_extended import create_access_token
 from . import np_auth
 from .forms import form_login, form_register, form_confirmar_registro
 
@@ -15,7 +16,11 @@ class AuthResource(Resource):
             case = UsuarioCase.login(body)
         except UsuarioCase.Exceptions.ConfirmacaoInvalida:
             abort(401, "Login ou senha incorretos")
-        return {"usuario": case.repository.usuario.id}
+        return {
+            "access_token": create_access_token(
+                identity=case.repository.usuario.id,
+            )
+        }
 
 
 class AuthRegisterResource(Resource):

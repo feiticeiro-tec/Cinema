@@ -7,6 +7,7 @@ import api
 @pytest.fixture(scope="session")
 def _app():
     app = Flask(__name__)
+    app.secret_key = "secret"
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     core.init_app(app)

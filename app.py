@@ -3,6 +3,7 @@ import core
 import api
 
 app = Flask(__name__)
+app.secret_key = "secret"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["ALEMBIC"] = {
