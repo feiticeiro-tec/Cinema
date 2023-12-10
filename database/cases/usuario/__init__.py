@@ -1,13 +1,11 @@
 from database.repositorys.usuario import UsuarioRepository, Usuario
 from .contratos import Contratos
-from .exceptions import ContratoInvalido, ConfirmacaoInvalida
+from .exceptions import Exceptions
 
 
 class UsuarioCase:
-    ContratoInvalido = ContratoInvalido
-    ConfirmacaoInvalida = ConfirmacaoInvalida
     Contratos = Contratos
-    UsuarioDuplicado = UsuarioRepository.DuplicateEmailUsuarioException
+    Exceptions = Exceptions
 
     def __init__(self, repository: UsuarioRepository):
         if isinstance(repository, Usuario):
@@ -17,7 +15,7 @@ class UsuarioCase:
     @classmethod
     def check_contrato(cls, contrato, tipo_contrato):
         if not isinstance(contrato, tipo_contrato):
-            raise cls.ContratoInvalido()
+            raise cls.Exceptions.ContratoInvalido()
 
     @classmethod
     def create(cls, contrato: "Contratos.CreateContrato"):
@@ -43,7 +41,9 @@ class UsuarioCase:
                 email=contrato.email,
             )
         except UsuarioRepository.NotFoundUsuarioException:
-            raise cls.ConfirmacaoInvalida()
+            raise cls.Exceptions.ConfirmacaoInvalida()
+        if not usuario.is_ativo:
+            raise cls.Exceptions.UsuarioInativado()
         if not contrato.check_login(usuario.senha):
-            raise cls.ConfirmacaoInvalida()
+            raise cls.Exceptions.ConfirmacaoInvalida()
         return cls(usuario)

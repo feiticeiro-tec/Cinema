@@ -1,4 +1,4 @@
-from database.cases.usuario import UsuarioCase, UsuarioRepository, Usuario
+from database.cases.usuario import UsuarioCase, UsuarioRepository
 import pytest
 
 
@@ -31,12 +31,12 @@ def test_create_duplicado(app):
         case.commit()
 
     with app.app_context():
-        with pytest.raises(UsuarioCase.UsuarioDuplicado):
+        with pytest.raises(UsuarioCase.Exceptions.UsuarioDuplicado):
             case = UsuarioCase.create(contrato)
 
 
 def test_check_contrato():
-    with pytest.raises(UsuarioCase.ContratoInvalido):
+    with pytest.raises(UsuarioCase.Exceptions.ContratoInvalido):
         UsuarioCase.check_contrato({}, str)
 
 
@@ -74,7 +74,7 @@ def test_login_senha_invalida(app):
             email="email",
             senha="senha_errada",
         )
-        with pytest.raises(UsuarioCase.ConfirmacaoInvalida):
+        with pytest.raises(UsuarioCase.Exceptions.ConfirmacaoInvalida):
             UsuarioCase.login(contrato)
 
 
@@ -93,5 +93,5 @@ def test_login_email_invalida(app):
             email="email_askjd",
             senha="senha",
         )
-        with pytest.raises(UsuarioCase.ConfirmacaoInvalida):
+        with pytest.raises(UsuarioCase.Exceptions.ConfirmacaoInvalida):
             UsuarioCase.login(contrato)

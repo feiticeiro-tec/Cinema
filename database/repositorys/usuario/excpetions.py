@@ -1,5 +1,5 @@
 class NotFoundUsuarioException(Exception):
     pass
 
-class DuplicateEmailUsuarioException(Exception):
+class UsuarioDuplicado(Exception):
     pass

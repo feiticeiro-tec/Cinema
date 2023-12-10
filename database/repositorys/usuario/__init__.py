@@ -1,14 +1,14 @@
 from ...models import Usuario
 from .excpetions import (
     NotFoundUsuarioException,
-    DuplicateEmailUsuarioException,
+    UsuarioDuplicado,
 )
 from database import db
 
 
 class UsuarioRepository:
     NotFoundUsuarioException = NotFoundUsuarioException
-    DuplicateEmailUsuarioException = DuplicateEmailUsuarioException
+    UsuarioDuplicado = UsuarioDuplicado
 
     def __init__(self, usuario: Usuario = None):
         if not usuario:
@@ -35,7 +35,7 @@ class UsuarioRepository:
         return Usuario.query.offset(offset).limit(limit).all()
 
     @classmethod
-    def get_by_email(cls, email: str):
+    def get_by_email(cls, email: str) -> Usuario:
         usuario = Usuario.query.filter_by(email=email).first()
         if not usuario:
             raise NotFoundUsuarioException()
@@ -59,7 +59,7 @@ class UsuarioRepository:
             .first()
         )
         if raiser and usuario:
-            raise self.DuplicateEmailUsuarioException()
+            raise self.UsuarioDuplicado()
         return usuario is not None
 
     @classmethod

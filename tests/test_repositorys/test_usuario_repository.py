@@ -180,7 +180,7 @@ def test_new_duplicado(app):
         db.session.commit()
 
     with app.app_context():
-        with pytest.raises(UsuarioRepository.DuplicateEmailUsuarioException):
+        with pytest.raises(UsuarioRepository.UsuarioDuplicado):
             UsuarioRepository.new("teste", "email", "senha")
 
 
@@ -195,5 +195,5 @@ def test_update_duplicado(app):
 
     with app.app_context():
         repo = UsuarioRepository.use_by_id(usuario2_id)
-        with pytest.raises(UsuarioRepository.DuplicateEmailUsuarioException):
+        with pytest.raises(UsuarioRepository.UsuarioDuplicado):
             repo.update("teste", "email", "senha")
