@@ -30,6 +30,9 @@ class SalaRepository:
 
     def set_cinema_id(self, cinema_id):
         self.sala.cinema_id = cinema_id
+    
+    def set_is_ativo(self, is_ativo):
+        self.sala.is_ativo = is_ativo
 
     @classmethod
     def new(cls, nome, descricao, cinema_id):
