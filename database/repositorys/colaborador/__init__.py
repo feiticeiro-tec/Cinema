@@ -60,7 +60,10 @@ class ColaboradorRepository:
 
     def set_admin(self, is_admin: bool):
         self.colaborador.is_admin = is_admin
-
+    
+    def set_ativo(self, is_ativo: bool):
+        self.colaborador.is_ativo = is_ativo
+    
     @classmethod
     def is_usuario_exist_on_cinema(cls, usuario_id, cinema_id):
         colaborador = (

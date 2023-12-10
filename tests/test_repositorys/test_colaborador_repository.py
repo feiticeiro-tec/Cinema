@@ -311,3 +311,45 @@ def test_new_duplicado(app):
             repo = ColaboradorRepository.new(usuario_id, cinema_id)
             repo.add()
             repo.commit()
+
+def test_set_ativo(app):
+    with app.app_context():
+        usuario = UsuarioRepository.new(
+            nome="teste",
+            email="email",
+            senha="senha",
+        )
+        usuario.add()
+        db.session.flush()
+        usuario_id = usuario.usuario.id
+        cinema = CinemaRepository.new(
+            nome="cinema",
+            descricao="descricao",
+            endereco=CinemaRepository.Endereco(
+                cep="cep",
+                uf="uf",
+                cidade="cidade",
+                bairro="bairro",
+                rua="rua",
+                numero=1,
+                complemento="complemento",
+                referencia="referencia",
+            ),
+        )
+        cinema.add()
+        db.session.flush()
+        cinema_id = cinema.cinema.id
+        repo = ColaboradorRepository.new(usuario_id, cinema_id)
+        repo.add()
+        repo.commit()
+        colaborador_id = repo.colaborador.id
+
+    with app.app_context():
+        colaborador = Colaborador.query.filter(Colaborador.id == colaborador_id).first()
+        assert colaborador.is_ativo == True
+        colaborador = ColaboradorRepository.use_by_id(colaborador_id)
+        colaborador.set_ativo(False)
+        colaborador.commit()
+    with app.app_context():
+        colaborador = Colaborador.query.filter(Colaborador.id == colaborador_id).first()
+        assert colaborador.is_ativo == False
