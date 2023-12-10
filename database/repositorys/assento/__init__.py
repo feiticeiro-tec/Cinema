@@ -39,6 +39,10 @@ class AssentoRepository:
         repo.set_sala_id(sala_id)
         return repo
 
+    def update(self, fileira, numero, is_ativo):
+        self.set_local(fileira, numero)
+        self.set_ativo(is_ativo)
+
     def add(self):
         db.session.add(self.assento)
 
