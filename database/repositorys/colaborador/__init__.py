@@ -58,6 +58,9 @@ class ColaboradorRepository:
             )
         )
 
+    def set_admin(self, is_admin: bool):
+        self.colaborador.is_admin = is_admin
+
     @classmethod
     def is_usuario_exist_on_cinema(cls, usuario_id, cinema_id):
         colaborador = (

@@ -227,9 +227,9 @@ def test_usuario_is_admin(app):
 
     with app.app_context():
         assert ColaboradorRepository.usuario_is_admin(usuario_id) == False
-        colaborador = ColaboradorRepository.get_by_usuario_id(usuario_id)
-        colaborador.is_admin = True
-        db.session.commit()
+        colaborador = ColaboradorRepository.use_by_usuario_id(usuario_id)
+        colaborador.set_admin(True)
+        colaborador.commit()
     with app.app_context():
         assert ColaboradorRepository.usuario_is_admin(usuario_id) == True
 
