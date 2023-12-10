@@ -1,0 +1,2 @@
+class NotFoundAssentoException(Exception):
+    pass
