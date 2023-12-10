@@ -4,7 +4,7 @@ import pytest
 
 def test_create(app):
     with app.app_context():
-        contrato = UsuarioCase.CreateContrato(
+        contrato = UsuarioCase.Contratos.CreateContrato(
             nome="teste",
             email="email",
             senha="senha",
@@ -17,6 +17,7 @@ def test_create(app):
         usuario = UsuarioRepository.get_by_id(usuario_id)
         assert usuario.nome == "teste"
         assert usuario.email == "email"
+        assert usuario.senha != "senha"
 
 
 def test_check_contrato():
