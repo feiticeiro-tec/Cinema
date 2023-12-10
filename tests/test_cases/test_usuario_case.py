@@ -18,6 +18,7 @@ def test_create(app):
         assert usuario.nome == "teste"
         assert usuario.email == "email"
         assert usuario.senha != "senha"
+        assert not usuario.is_ativo
 
 
 def test_create_duplicado(app):
@@ -48,6 +49,7 @@ def test_login_valido(app):
             senha="senha",
         )
         case = UsuarioCase.create(contrato)
+        case.repository.set_is_ativo(True)
         case.commit()
 
     with app.app_context():
@@ -59,6 +61,25 @@ def test_login_valido(app):
         assert case
 
 
+def test_login_inativo(app):
+    with app.app_context():
+        contrato = UsuarioCase.Contratos.CreateContrato(
+            nome="teste",
+            email="email",
+            senha="senha",
+        )
+        case = UsuarioCase.create(contrato)
+        case.commit()
+
+    with app.app_context():
+        contrato = UsuarioCase.Contratos.LoginContrato(
+            email="email",
+            senha="senha",
+        )
+        with pytest.raises(UsuarioCase.Exceptions.UsuarioInativado):
+            UsuarioCase.login(contrato)
+
+
 def test_login_senha_invalida(app):
     with app.app_context():
         contrato = UsuarioCase.Contratos.CreateContrato(
@@ -67,6 +88,7 @@ def test_login_senha_invalida(app):
             senha="senha",
         )
         case = UsuarioCase.create(contrato)
+        case.repository.set_is_ativo(True)
         case.commit()
 
     with app.app_context():
@@ -95,3 +117,24 @@ def test_login_email_invalida(app):
         )
         with pytest.raises(UsuarioCase.Exceptions.ConfirmacaoInvalida):
             UsuarioCase.login(contrato)
+
+
+def test_confirm_usuario(app):
+    with app.app_context():
+        contrato = UsuarioCase.Contratos.CreateContrato(
+            nome="teste",
+            email="email",
+            senha="senha",
+        )
+        case = UsuarioCase.create(contrato)
+        case.commit()
+
+    with app.app_context():
+        usuario = UsuarioRepository.get_by_email(email="email")
+        assert not usuario.is_ativo
+        contrato = UsuarioCase.Contratos.ConfirmUsuario(
+            token=usuario.id,
+            senha="senha",
+        )
+        case = UsuarioCase.confirm_usuario(contrato)
+        assert case.repository.usuario.is_ativo

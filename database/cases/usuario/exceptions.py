@@ -1,4 +1,4 @@
-from database.repositorys.usuario.excpetions import UsuarioDuplicado
+from database.repositorys.usuario.excpetions import UsuarioDuplicado,NotFoundUsuarioException
 
 class ContratoInvalido(Exception):
     pass
@@ -16,3 +16,4 @@ class Exceptions():
     ConfirmacaoInvalida = ConfirmacaoInvalida
     UsuarioInativado = UsuarioInativado
     UsuarioDuplicado = UsuarioDuplicado
+    NotFoundUsuarioException = NotFoundUsuarioException

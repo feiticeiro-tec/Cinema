@@ -25,6 +25,7 @@ class UsuarioCase:
             email=contrato.email,
             senha=contrato.senha,
         )
+        repo.set_is_ativo(False)
         repo.add()
 
         return cls(repo)
@@ -46,4 +47,11 @@ class UsuarioCase:
             raise cls.Exceptions.UsuarioInativado()
         if not contrato.check_login(usuario.senha):
             raise cls.Exceptions.ConfirmacaoInvalida()
+        return cls(usuario)
+
+    @classmethod
+    def confirm_usuario(cls, contrato: "Contratos.ConfirmUsuario"):
+        cls.check_contrato(contrato, cls.Contratos.ConfirmUsuario)
+        usuario = UsuarioRepository.use_by_id(id=contrato.token)
+        usuario.set_is_ativo(True)
         return cls(usuario)

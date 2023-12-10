@@ -24,7 +24,11 @@ class UsuarioRepository:
         return cls(cls.get_by_email(email))
 
     @classmethod
-    def get_by_id(cls, id: str):
+    def get_by_id(cls, id: str) -> Usuario:
+        """Pegar um usuario existente.
+
+        raises: NotFoundUsuarioException
+        """
         usuario = Usuario.query.filter_by(id=id).first()
         if not usuario:
             raise cls.NotFoundUsuarioException()
