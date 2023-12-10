@@ -38,7 +38,7 @@ class AssentoRepository:
 
     @classmethod
     def new(cls, fileira, numero, sala_id):
-        cls.exists_in_local(fileira, numero, sala_id,raiser=True)
+        cls.exists_in_local(fileira, numero, sala_id, raiser=True)
         repo = cls()
         repo.set_local(fileira, numero)
         repo.set_sala_id(sala_id)
@@ -73,6 +73,17 @@ class AssentoRepository:
         if assento:
             return True
         return False
+
+    @classmethod
+    def get_all_in_sala_id(cls, sala_id, offset=0, limit=10):
+        assentos = (
+            db.session.query(Assento)
+            .filter(Assento.sala_id == sala_id)
+            .offset(offset)
+            .limit(limit)
+            .all()
+        )
+        return assentos
 
     def add(self):
         db.session.add(self.assento)

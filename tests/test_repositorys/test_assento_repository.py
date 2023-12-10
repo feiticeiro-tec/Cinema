@@ -302,3 +302,48 @@ def test_update_duplicado(app):
                 numero=2,
                 is_ativo=False,
             )
+
+
+def test_get_all_in_sala_id(app):
+    with app.app_context():
+        cinema = CinemaRepository.new(
+            nome="cinema",
+            descricao="descricao",
+            endereco=CinemaRepository.Endereco(
+                cep="00000000",
+                uf="uf",
+                cidade="cidade",
+                bairro="bairro",
+                rua="rua",
+                numero=2,
+                complemento="complemento",
+                referencia="referencia",
+            ),
+        )
+        cinema.add()
+        db.session.flush()
+        cinema_id = cinema.cinema.id
+        sala = SalaRepository.new(
+            nome="sala",
+            descricao="descricao",
+            cinema_id=cinema_id,
+        )
+        sala.add()
+        sala.commit()
+        db.session.flush()
+        sala_id = sala.sala.id
+
+        for i in range(1, 11):
+            repo = AssentoRepository.new(
+                fileira="A",
+                numero=i,
+                sala_id=sala_id,
+            )
+            repo.add()
+        repo.commit()
+
+    with app.app_context():
+        assentos = AssentoRepository.get_all_in_sala_id(sala_id)
+        assert len(assentos) == 10
+        for i in range(1, 11):
+            assert assentos[i - 1].numero == i
