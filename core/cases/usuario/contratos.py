@@ -1,4 +1,4 @@
-from pydantic import BaseModel, field_validator, field_serializer
+from pydantic import BaseModel, field_validator
 from werkzeug.security import generate_password_hash, check_password_hash
 
 

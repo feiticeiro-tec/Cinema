@@ -1,4 +1,8 @@
-from core.repositorys.usuario.excpetions import UsuarioDuplicado,NotFoundUsuarioException
+from core.repositorys.usuario.excpetions import (
+    UsuarioDuplicado,
+    NotFoundUsuarioException,
+)
+
 
 class ContratoInvalido(Exception):
     pass
@@ -11,7 +15,8 @@ class ConfirmacaoInvalida(Exception):
 class UsuarioInativado(Exception):
     pass
 
-class Exceptions():
+
+class Exceptions:
     ContratoInvalido = ContratoInvalido
     ConfirmacaoInvalida = ConfirmacaoInvalida
     UsuarioInativado = UsuarioInativado

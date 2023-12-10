@@ -51,9 +51,10 @@ def test_use_by_id_not_found(app):
         with pytest.raises(Exception):
             UsuarioRepository.use_by_id("123")
 
+
 def test_set_is_ativo(app):
     with app.app_context():
-        usuario = Usuario(email="email", senha="senha", nome="teste")
+        usuario = Usuario(email="email", senha="senha", nome="teste",)
         repo = UsuarioRepository(usuario)
         repo.set_is_ativo(False)
         repo.add()
