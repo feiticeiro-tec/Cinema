@@ -1,0 +1,2 @@
+class NotFoundSalaException(Exception):
+    pass
