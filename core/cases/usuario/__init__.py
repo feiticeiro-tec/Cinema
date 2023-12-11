@@ -1,4 +1,4 @@
-from database.repositorys.usuario import UsuarioRepository, Usuario
+from database.repositorys import UsuarioRepository
 from .contratos import Contratos
 from .exceptions import Exceptions
 
@@ -10,7 +10,7 @@ class UsuarioCase:
     def __init__(self, repository: UsuarioRepository = None):
         if repository is None:
             repository = UsuarioRepository()
-        elif isinstance(repository, Usuario):
+        elif not isinstance(repository, UsuarioRepository):
             repository = UsuarioRepository(repository)
         self.repository = repository
 

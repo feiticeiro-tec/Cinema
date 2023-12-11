@@ -10,8 +10,8 @@ class ColaboradorCase:
     def __init__(self, repository: ColaboradorRepository = None):
         if repository is None:
             repository = ColaboradorRepository()
-        elif isinstance(repository, ColaboradorRepository):
-            repository = ColaboradorRepository()
+        elif not isinstance(repository, ColaboradorRepository):
+            repository = ColaboradorRepository(repository)
         self.repository = repository
 
     @classmethod
