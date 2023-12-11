@@ -1,7 +1,7 @@
-from core.repositorys.colaborador import ColaboradorRepository, Colaborador
-from core.repositorys.usuario import UsuarioRepository
-from core.repositorys.cinema import CinemaRepository
-from core import db
+from database.repositorys.colaborador import ColaboradorRepository, Colaborador
+from database.repositorys.usuario import UsuarioRepository
+from database.repositorys.cinema import CinemaRepository
+from database import db
 import pytest
 
 

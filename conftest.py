@@ -1,5 +1,5 @@
 from flask import Flask
-import core
+import database
 import pytest
 import api
 
@@ -10,7 +10,7 @@ def _app():
     app.secret_key = "secret"
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    core.init_app(app)
+    database.init_app(app)
     api.init_app(app)
     return app
 
@@ -18,7 +18,7 @@ def _app():
 @pytest.fixture(scope="function")
 def app(_app):
     with _app.app_context():
-        core.db.create_all()
+        database.db.create_all()
         yield _app
-        core.db.session.remove()
-        core.db.drop_all()
+        database.db.session.remove()
+        database.db.drop_all()

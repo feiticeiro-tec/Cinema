@@ -1,5 +1,5 @@
-from core.models import Cinema
-from core.repositorys.cinema import CinemaRepository
+from database.models import Cinema
+from database.repositorys.cinema import CinemaRepository
 import pytest
 
 

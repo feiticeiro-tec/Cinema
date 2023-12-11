@@ -1,4 +1,4 @@
-from core.repositorys.usuario.excpetions import (
+from database.repositorys.usuario.excpetions import (
     UsuarioDuplicado,
     NotFoundUsuarioException,
 )
