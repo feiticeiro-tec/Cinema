@@ -88,3 +88,6 @@ class UsuarioRepository:
 
     def commit(self):
         db.session.commit()
+
+    def flush(self):
+        db.session.flush()

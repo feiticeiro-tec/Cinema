@@ -3,5 +3,10 @@ from database.repositorys.colaborador.exceptions import (
 )
 
 
+class ContratoInvalido(Exception):
+    ...
+
+
 class Exceptions:
     Duplicado = DuplicadoColaboradorException
+    ContratoInvalido = ContratoInvalido
