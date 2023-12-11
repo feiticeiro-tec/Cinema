@@ -7,8 +7,10 @@ class UsuarioCase:
     Contratos = Contratos
     Exceptions = Exceptions
 
-    def __init__(self, repository: UsuarioRepository):
-        if isinstance(repository, Usuario):
+    def __init__(self, repository: UsuarioRepository = None):
+        if repository is None:
+            repository = UsuarioRepository()
+        elif isinstance(repository, Usuario):
             repository = UsuarioRepository(repository)
         self.repository = repository
 
