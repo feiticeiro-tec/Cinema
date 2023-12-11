@@ -60,3 +60,7 @@ class CinemaRepository:
     @classmethod
     def commit(cls):
         db.session.commit()
+
+    @classmethod
+    def flush(cls):
+        db.session.flush()

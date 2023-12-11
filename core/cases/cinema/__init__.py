@@ -22,6 +22,9 @@ class CinemaCase:
     def commit(self):
         self.repository.commit()
 
+    def flush(self):
+        self.repository.flush()
+
     @classmethod
     def create(cls, contrato: "Contratos.CreateContrato"):
         cls.check_contrato(contrato, cls.Contratos.CreateContrato)
