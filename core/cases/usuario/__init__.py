@@ -20,7 +20,7 @@ class UsuarioCase:
     @classmethod
     def create(cls, contrato: "Contratos.CreateContrato"):
         cls.check_contrato(contrato, cls.Contratos.CreateContrato)
-        repo = UsuarioRepository.new(
+        repo = cls().repository.new(
             nome=contrato.nome,
             email=contrato.email,
             senha=contrato.senha,
@@ -38,10 +38,10 @@ class UsuarioCase:
     def login(cls, contrato: "Contratos.LoginContrato"):
         cls.check_contrato(contrato, cls.Contratos.LoginContrato)
         try:
-            usuario = UsuarioRepository.get_by_email(
+            usuario = cls().repository.get_by_email(
                 email=contrato.email,
             )
-        except UsuarioRepository.NotFoundUsuarioException:
+        except cls().repository.NotFoundUsuarioException:
             raise cls.Exceptions.ConfirmacaoInvalida()
         if not usuario.is_ativo:
             raise cls.Exceptions.UsuarioInativado()
@@ -57,6 +57,6 @@ class UsuarioCase:
 
         """
         cls.check_contrato(contrato, cls.Contratos.ConfirmUsuario)
-        usuario = UsuarioRepository.use_by_id(id=contrato.token)
+        usuario = cls().repository.use_by_id(id=contrato.token)
         usuario.set_is_ativo(True)
         return cls(usuario)
