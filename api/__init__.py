@@ -3,7 +3,14 @@ from importlib import import_module
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 
-api = Api()
+authorizations = {
+    "jwt": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+    }
+}
+api = Api(authorizations=authorizations)
 jm = JWTManager()
 cors = CORS()
 

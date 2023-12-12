@@ -35,4 +35,4 @@ class CreateCinemaWithColaboradorController:
             )
         )
         case_colaborador.commit()
-        return case_cinema, case_colaborador
+        return case_cinema

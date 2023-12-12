@@ -12,10 +12,11 @@ def test_criacao_de_usuario(app):
             },
         )
         assert response.status_code == 201
-        assert response.json == {
-            "titulo": "Usuário cadastrado com sucesso",
-            "message": "Um email de confirmação foi enviado para o seu email",
-        }
+        assert response.json["titulo"] == "Usuário cadastrado com sucesso"
+        assert (
+            response.json["message"]
+            == "Um email de confirmação foi enviado para o seu email"
+        )
 
 
 def test_confirmacao_de_conta(app):

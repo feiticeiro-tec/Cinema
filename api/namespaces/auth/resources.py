@@ -36,6 +36,8 @@ class AuthRegisterResource(Resource):
         return {
             "titulo": "Usuário cadastrado com sucesso",
             "message": "Um email de confirmação foi enviado para o seu email",
+            "usuario_id": str(case.repository.usuario.id),
+            "warning": "O ID do usuario, é apenas para teste",
         }, 201
 
     @np_auth.expect(form_confirmar_registro)
