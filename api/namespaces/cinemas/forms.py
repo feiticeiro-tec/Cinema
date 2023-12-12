@@ -41,10 +41,6 @@ endereco = np_cinemas.model(
 form_create_cinema = np_cinemas.model(
     "CreateCinema",
     {
-        "id": fields.String(
-            readOnly=True,
-            description="ID do cinema",
-        ),
         "nome": fields.String(
             required=True,
             description="Nome do cinema",
