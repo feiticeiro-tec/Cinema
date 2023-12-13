@@ -1,4 +1,4 @@
-# Cinema API
+# Cinema API 
 A aplicação tem como objetivo fazer o gerenciamento de sessoes de um cinema e seus assentos "vendido" aos seus usuarios 
 
 ## Banco de dados
