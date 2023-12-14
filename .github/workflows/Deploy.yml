@@ -32,10 +32,10 @@ jobs:
       run: pytest
         
     - name: Login to Container Registry
-      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} ${{ secrets.DOCKER_HOST }}
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} ${{ secrets.DOCKER_HOST }} -qy
 
     - name: Build and Push Docker Image
       run: |
-        docker build -t cinema .
-        docker tag cinema ${{ secrets.DOCKER_FROM }}
-        docker push ${{ secrets.DOCKER_FROM }}
+        docker build -t cinema . -qy
+        docker tag cinema ${{ secrets.DOCKER_FROM }} -qy
+        docker push ${{ secrets.DOCKER_FROM }} -qy
