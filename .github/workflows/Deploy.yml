@@ -36,6 +36,6 @@ jobs:
 
     - name: Build and Push Docker Image
       run: |
-        docker build -t cinema . &> /dev/null
-        docker tag cinema ${{ secrets.DOCKER_FROM }} &> /dev/null
-        docker push ${{ secrets.DOCKER_FROM }} &> /dev/null
+        docker build -t cinema .
+        docker tag cinema ${{ secrets.DOCKER_FROM }}
+        docker push ${{ secrets.DOCKER_FROM }}
