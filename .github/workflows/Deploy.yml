@@ -36,6 +36,6 @@ jobs:
       with:
         context: .
         push: true
-        tags: ${{ secrets.DOCKER_REGISTRY }}:latest
+        tags: ${{ secrets.DOCKER_REGISTRY }}
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
