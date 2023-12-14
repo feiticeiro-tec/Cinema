@@ -10,7 +10,11 @@ authorizations = {
         "name": "Authorization",
     }
 }
-api = Api(authorizations=authorizations)
+api = Api(
+    authorizations=authorizations,
+    version='0.1.0',
+    title="Api Cinema",
+)
 jm = JWTManager()
 cors = CORS()
 
