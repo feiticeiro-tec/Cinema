@@ -14,7 +14,7 @@ api = Api(
     authorizations=authorizations,
     version='0.1.0',
     title="Api Cinema",
-    doc="Api para gerenciamento de sessão de cinema",
+    description="Api para gerenciamento de sessão de cinema",
 )
 jm = JWTManager()
 cors = CORS()
